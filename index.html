@@ -3,532 +3,719 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nimicoo Ayam Gunting</title>
+  <meta name="description" content="Nimicoo Ayam Gunting — Ayam Gemok Tanpa Tulang. Order sekarang melalui WhatsApp, GrabFood, atau singgah terus di outlet kami di Kamunting, Perak." />
+  <title>Nimicoo Ayam Gunting — Gemok Tanpa Tulang</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Karla:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --red: #c8102e;
-      --red-dark: #9e0c23;
-      --cream: #fdf6ee;
-      --gold: #e8b84b;
+      --red:        #C8102E;
+      --red-dark:   #8B0A1E;
+      --red-deeper: #6B0716;
+      --red-light:  #F9E5E8;
+      --gold:       #E8A020;
+      --cream:      #FDF6EC;
+      --dark:       #1A1A1A;
+      --text:       #2D2D2D;
+      --muted:      #6B6B6B;
+      --border:     #E8DFD0;
+      --nav-h:      70px;
+      --radius:     14px;
+      --ease:       200ms ease;
     }
-    body { font-family: 'Poppins', sans-serif; background: var(--cream); }
-    .font-display { font-family: 'Playfair Display', serif; }
-
-    /* NAV */
-    nav { background: var(--red); }
-
-    /* HERO */
-    .hero-bg {
-      background: linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0.55) 100%),
-        url('https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=1400&q=80') center/cover no-repeat;
-      min-height: 520px;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
+    body { font-family: 'Karla', system-ui, sans-serif; background: #fff; color: var(--text); overflow-x: hidden; line-height: 1.6; }
+    .font-display   { font-family: 'Playfair Display', Georgia, serif; }
+    .font-script    { font-family: 'Satisfy', cursive; }
 
-    /* MENU CARDS */
-    .menu-card { transition: transform .25s, box-shadow .25s; }
-    .menu-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(200,16,46,.18); }
+    /* ─── Navbar ─────────────────────────── */
+    .navbar { position: sticky; top: 0; z-index: 100; background: var(--red); height: var(--nav-h); box-shadow: 0 2px 20px rgba(0,0,0,.22); }
+    .nav-link { color: rgba(255,255,255,.88); font-weight: 600; font-size: 14px; letter-spacing: .03em; transition: color var(--ease); text-decoration: none; }
+    .nav-link:hover { color: #fff; }
 
-    /* STORY */
-    .story-bg {
-      background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 60%, #7a0916 100%);
-    }
+    /* ─── Hamburger ───────────────────────── */
+    .hline { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; transition: transform 250ms ease, opacity 250ms ease; transform-origin: center; }
+    #menu-btn[aria-expanded="true"] .hline:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    #menu-btn[aria-expanded="true"] .hline:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    #menu-btn[aria-expanded="true"] .hline:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    #mobile-menu { max-height: 0; overflow: hidden; transition: max-height 300ms ease; background: #8B0A1E; }
+    #mobile-menu.open { max-height: 340px; }
 
-    /* FAQ */
-    details summary { cursor: pointer; list-style: none; }
-    details summary::-webkit-details-marker { display: none; }
-    details[open] .chevron { transform: rotate(180deg); }
-    .chevron { transition: transform .3s; }
+    /* ─── Hero ────────────────────────────── */
+    .hero { position: relative; min-height: 520px; display: flex; align-items: center; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background: linear-gradient(to right, rgba(0,0,0,.78) 0%, rgba(0,0,0,.5) 55%, rgba(0,0,0,.15) 100%), url('https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=1600&q=85') center/cover no-repeat; transform: scale(1.04); transition: transform 7s ease-out; }
+    .hero-bg.loaded { transform: scale(1); }
 
-    /* FOOTER */
-    footer { background: #1a1a1a; }
+    /* ─── Section script headings ─────────── */
+    .s-script { font-family: 'Satisfy', cursive; font-size: clamp(32px, 4vw, 48px); line-height: 1.1; }
 
-    /* SCROLL FADE */
-    .fade-up { opacity: 0; transform: translateY(32px); transition: opacity .6s ease, transform .6s ease; }
+    /* ─── Buttons ─────────────────────────── */
+    .btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'Karla', sans-serif; font-weight: 700; font-size: 14px; border-radius: 100px; padding: 12px 28px; transition: background var(--ease), box-shadow var(--ease), transform var(--ease); touch-action: manipulation; cursor: pointer; text-decoration: none; border: none; letter-spacing: .02em; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn:active { transform: none; }
+    .btn-red { background: var(--red); color: #fff; }
+    .btn-red:hover { background: var(--red-dark); box-shadow: 0 6px 22px rgba(200,16,46,.4); }
+    .btn-white { background: #fff; color: var(--red); }
+    .btn-white:hover { background: #fff0f1; }
+    .btn-outline-red { background: transparent; color: var(--red); border: 2px solid var(--red); }
+    .btn-outline-red:hover { background: var(--red); color: #fff; }
+    .btn-outline-white { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); }
+    .btn-outline-white:hover { background: rgba(255,255,255,.1); }
+
+    /* ─── Category tabs ───────────────────── */
+    .cat-tab { display: flex; flex-direction: column; align-items: center; gap: 7px; cursor: pointer; touch-action: manipulation; border: none; background: none; padding: 0; }
+    .cat-icon { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--red-light); transition: background var(--ease), box-shadow var(--ease); }
+    .cat-icon svg { color: var(--red); width: 24px; height: 24px; }
+    .cat-tab[aria-selected="true"] .cat-icon { background: var(--red); box-shadow: 0 4px 18px rgba(200,16,46,.35); }
+    .cat-tab[aria-selected="true"] .cat-icon svg { color: #fff; }
+    .cat-tab:not([aria-selected="true"]):hover .cat-icon { background: #f5cdd2; }
+    .cat-lbl { font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .02em; transition: color var(--ease); }
+    .cat-tab[aria-selected="true"] .cat-lbl { color: var(--red); }
+
+    /* ─── Menu cards ──────────────────────── */
+    .menu-card { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,.08); transition: transform var(--ease), box-shadow var(--ease); }
+    .menu-card:hover { transform: translateY(-5px); box-shadow: 0 16px 44px rgba(200,16,46,.16); }
+    .card-badge { position: absolute; top: 10px; left: 10px; background: var(--red); color: #fff; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; z-index: 2; }
+
+    /* ─── Story ───────────────────────────── */
+    .story-bg { background: linear-gradient(135deg, var(--red-deeper) 0%, var(--red-dark) 50%, var(--red) 100%); }
+
+    /* ─── Social grid ─────────────────────── */
+    .s-post { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 1; display: block; }
+    .s-post img { width: 100%; height: 100%; object-fit: cover; transition: transform 400ms ease; display: block; }
+    .s-post:hover img { transform: scale(1.06); }
+    .s-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.3); transition: background 250ms ease; }
+    .s-post:hover .s-overlay { background: rgba(0,0,0,.1); }
+    .s-meta { position: absolute; bottom: 10px; left: 12px; display: flex; align-items: center; gap: 4px; color: #fff; font-size: 12px; font-weight: 700; }
+
+    /* ─── Review cards ────────────────────── */
+    .review-card { background: #fff; border-radius: var(--radius); padding: 22px; box-shadow: 0 2px 18px rgba(0,0,0,.07); border: 1px solid var(--border); }
+    .avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--red-light); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; color: var(--red); flex-shrink: 0; }
+
+    /* ─── FAQ ─────────────────────────────── */
+    details.faq { background: #fff; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; }
+    details.faq[open] { box-shadow: 0 4px 20px rgba(200,16,46,.08); }
+    details.faq summary { list-style: none; cursor: pointer; padding: 18px 22px; font-weight: 600; font-size: 15px; color: var(--text); display: flex; align-items: center; justify-content: space-between; gap: 12px; touch-action: manipulation; user-select: none; }
+    details.faq summary::-webkit-details-marker { display: none; }
+    details.faq summary:focus-visible { outline: 2px solid var(--red); outline-offset: -2px; }
+    .faq-chevron { flex-shrink: 0; color: var(--muted); transition: transform 250ms ease; }
+    details.faq[open] .faq-chevron { transform: rotate(180deg); color: var(--red); }
+    .faq-body { padding: 0 22px 18px; font-size: 14px; line-height: 1.75; color: var(--muted); }
+
+    /* ─── Footer ──────────────────────────── */
+    footer { background: var(--red-dark); }
+    .f-head { color: #fff; font-weight: 700; font-size: 13px; letter-spacing: .06em; margin-bottom: 12px; }
+    .f-text { color: rgba(255,255,255,.6); font-size: 13px; line-height: 2; }
+    .f-link { color: rgba(255,255,255,.6); font-size: 13px; text-decoration: none; transition: color var(--ease); }
+    .f-link:hover { color: #fff; }
+    .soc-icon { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,.12); display: flex; align-items: center; justify-content: center; transition: background var(--ease); text-decoration: none; touch-action: manipulation; }
+    .soc-icon:hover { background: rgba(255,255,255,.25); }
+    .soc-icon svg { width: 16px; height: 16px; color: #fff; }
+
+    /* ─── WhatsApp float ──────────────────── */
+    .wa-float { position: fixed; bottom: 24px; right: 24px; z-index: 90; width: 56px; height: 56px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 22px rgba(37,211,102,.5); transition: transform var(--ease), box-shadow var(--ease); touch-action: manipulation; }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 8px 30px rgba(37,211,102,.6); }
+    .wa-float:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+    /* ─── Scroll reveal ───────────────────── */
+    .fade-up { opacity: 0; transform: translateY(26px); transition: opacity 560ms ease, transform 560ms ease; }
     .fade-up.visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .fade-up { opacity: 1; transform: none; transition: none; } }
 
-    /* NAV LINK HOVER */
-    .nav-link::after {
-      content: ''; display: block; height: 2px; width: 0;
-      background: white; transition: width .3s;
-    }
-    .nav-link:hover::after { width: 100%; }
+    /* ─── Focus ring ──────────────────────── */
+    :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; border-radius: 4px; }
+
+    /* ─── Map placeholder ─────────────────── */
+    .map-box { border-radius: 10px; overflow: hidden; background: #e5e7eb; position: relative; }
+    .map-pin { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); }
   </style>
 </head>
-<body class="overflow-x-hidden">
+<body>
 
-<!-- ============ NAVBAR ============ -->
-<nav class="sticky top-0 z-50 shadow-lg">
-  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+<!-- ═══════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════ -->
+<header class="navbar">
+  <div class="max-w-6xl mx-auto px-6 h-full flex items-center justify-between">
+
     <!-- Logo -->
-    <a href="#" class="flex items-center gap-2">
-      <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">
-        <span class="text-red-700 font-black text-sm leading-none text-center">NAG</span>
+    <a href="#" class="flex items-center gap-3" aria-label="Nimicoo — Laman Utama" style="text-decoration:none;">
+      <!-- Mascot placeholder circle -->
+      <div style="width:42px;height:42px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">
+        <svg width="28" height="28" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <circle cx="20" cy="20" r="20" fill="#C8102E"/>
+          <circle cx="20" cy="14" r="6" fill="#fff"/>
+          <rect x="12" y="22" width="16" height="10" rx="5" fill="#fff"/>
+        </svg>
       </div>
       <div class="text-white leading-tight">
-        <div class="font-black text-base tracking-wide">NIMICOO</div>
-        <div class="text-xs font-light opacity-80">Ayam Gunting Tanpa Tulang</div>
+        <div style="font-weight:900;font-size:16px;letter-spacing:.14em;">NIMICOO</div>
+        <div style="font-size:10px;font-weight:300;opacity:.65;letter-spacing:.06em;">AYAM ✂ GEMOK TANPA TULANG</div>
       </div>
     </a>
-    <!-- Links -->
-    <div class="hidden md:flex items-center gap-8 text-white font-medium text-sm">
-      <a href="#menu" class="nav-link pb-0.5">Menu</a>
-      <a href="#location" class="nav-link pb-0.5">Location</a>
-      <a href="#story" class="nav-link pb-0.5">Our Story</a>
-      <a href="#order"
-         class="bg-white text-red-700 font-bold px-5 py-2 rounded-full hover:bg-red-50 transition">
-        Order Now
-      </a>
-    </div>
-    <!-- Mobile Hamburger -->
-    <button id="menu-btn" class="md:hidden text-white focus:outline-none">
-      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-      </svg>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-8" aria-label="Navigasi utama">
+      <a href="#menu"     class="nav-link">Menu</a>
+      <a href="#location" class="nav-link">Location</a>
+      <a href="#story"    class="nav-link">Our Story</a>
+      <a href="#order" class="btn btn-white" style="padding:10px 22px;font-size:13px;">Order Now</a>
+    </nav>
+
+    <!-- Hamburger -->
+    <button id="menu-btn" class="md:hidden flex flex-col gap-[5px] p-2" aria-expanded="false" aria-controls="mobile-menu" aria-label="Buka menu">
+      <span class="hline"></span>
+      <span class="hline"></span>
+      <span class="hline"></span>
     </button>
   </div>
-  <!-- Mobile Menu -->
-  <div id="mobile-menu" class="hidden md:hidden bg-red-800 px-6 pb-4 flex flex-col gap-3 text-white font-medium">
-    <a href="#menu" class="py-1 border-b border-red-600">Menu</a>
-    <a href="#location" class="py-1 border-b border-red-600">Location</a>
-    <a href="#story" class="py-1 border-b border-red-600">Our Story</a>
-    <a href="#order" class="mt-2 bg-white text-red-700 font-bold px-5 py-2 rounded-full text-center">Order Now</a>
-  </div>
-</nav>
 
-<!-- ============ HERO ============ -->
-<section class="hero-bg flex items-center" id="home">
-  <div class="max-w-6xl mx-auto px-6 py-20 w-full">
-    <div class="max-w-lg">
-      <span class="inline-block bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-4 tracking-widest uppercase">
-        Special Set
-      </span>
-      <h1 class="font-display text-white text-5xl md:text-7xl font-black leading-tight mb-3">
+  <!-- Mobile menu -->
+  <div id="mobile-menu" aria-label="Navigasi mudah alih">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col gap-1">
+      <a href="#menu"     class="mob-lnk py-3 px-2 text-white font-semibold text-sm border-b border-white/10" style="text-decoration:none;">Menu</a>
+      <a href="#location" class="mob-lnk py-3 px-2 text-white font-semibold text-sm border-b border-white/10" style="text-decoration:none;">Location</a>
+      <a href="#story"    class="mob-lnk py-3 px-2 text-white font-semibold text-sm" style="text-decoration:none;">Our Story</a>
+      <a href="#order"    class="mob-lnk btn btn-white mt-3 justify-center">Order Now</a>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════
+     HERO
+═══════════════════════════════════════ -->
+<section class="hero" id="home" style="min-height:480px;">
+  <div class="hero-bg" id="hero-bg" role="img" aria-label="Set Rumah Terbuka Nimicoo"></div>
+  <div class="max-w-6xl mx-auto px-8 py-16 w-full" style="position:relative;z-index:1;">
+    <div class="max-w-md fade-up">
+      <h1 class="font-display text-white" style="font-size:clamp(44px,7.5vw,80px);font-weight:900;line-height:1.0;margin-bottom:12px;letter-spacing:-.01em;">
         SET<br/>RUMAH<br/>TERBUKA
       </h1>
-      <p class="text-white/80 text-lg mb-8">Pelengkap rumah terbuka 🍗</p>
-      <a href="#order"
-         class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-full text-base shadow-lg hover:shadow-red-900/40 transition-all duration-200">
-        Order Now
-      </a>
+      <p class="text-white" style="font-size:15px;font-weight:400;opacity:.82;margin-bottom:28px;">Pelengkap rumah terbuka</p>
+      <a href="#order" class="btn btn-red" style="font-size:15px;padding:14px 34px;">Order Now</a>
     </div>
   </div>
 </section>
 
-<!-- ============ MENU ============ -->
-<section id="menu" class="py-20 bg-[#fdf6ee]">
+<!-- ═══════════════════════════════════════
+     OUR MENU
+═══════════════════════════════════════ -->
+<section id="menu" class="py-16" style="background:var(--cream);">
   <div class="max-w-6xl mx-auto px-6">
-    <!-- Heading -->
+
+    <!-- Section heading -->
     <div class="text-center mb-10 fade-up">
-      <h2 class="font-display text-red-600 text-4xl font-bold">Our Menu</h2>
-      <div class="w-12 h-1 bg-red-500 mx-auto mt-3 rounded-full"></div>
+      <h2 class="font-script s-script" style="color:var(--red);">Our Menu</h2>
     </div>
 
-    <!-- Category Tabs -->
-    <div class="flex justify-center gap-8 mb-10 fade-up">
-      <button class="flex flex-col items-center gap-1 group">
-        <div class="w-14 h-14 rounded-full bg-red-100 group-hover:bg-red-200 flex items-center justify-center transition">
-          <span class="text-2xl">🏆</span>
+    <!-- Category tabs -->
+    <div class="flex justify-center gap-8 md:gap-14 mb-12 fade-up" role="tablist" aria-label="Kategori menu">
+      <button class="cat-tab" role="tab" aria-selected="true" data-cat="bestseller">
+        <div class="cat-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M16 4h2a1 1 0 011 1v2a4 4 0 01-4 4H9a4 4 0 01-4-4V5a1 1 0 011-1h2M8 4V3a1 1 0 011-1h6a1 1 0 011 1v1M9 12v4m6-4v4m-7 4h8"/></svg>
         </div>
-        <span class="text-xs font-semibold text-red-700">Best Seller</span>
+        <span class="cat-lbl">Best Seller</span>
       </button>
-      <button class="flex flex-col items-center gap-1 group">
-        <div class="w-14 h-14 rounded-full bg-red-100 group-hover:bg-red-200 flex items-center justify-center transition">
-          <span class="text-2xl">🏷️</span>
+      <button class="cat-tab" role="tab" aria-selected="false" data-cat="deals">
+        <div class="cat-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 7h.01M3 7l4-4h10l4 4v10l-4 4H7l-4-4V7z"/></svg>
         </div>
-        <span class="text-xs font-semibold text-gray-600">Best Deals</span>
+        <span class="cat-lbl">Best Deals</span>
       </button>
-      <button class="flex flex-col items-center gap-1 group">
-        <div class="w-14 h-14 rounded-full bg-red-100 group-hover:bg-red-200 flex items-center justify-center transition">
-          <span class="text-2xl">⭐</span>
+      <button class="cat-tab" role="tab" aria-selected="false" data-cat="choice">
+        <div class="cat-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
         </div>
-        <span class="text-xs font-semibold text-gray-600">Best Choice</span>
+        <span class="cat-lbl">Best Choice</span>
       </button>
-      <button class="flex flex-col items-center gap-1 group">
-        <div class="w-14 h-14 rounded-full bg-red-100 group-hover:bg-red-200 flex items-center justify-center transition">
-          <span class="text-2xl">➕</span>
+      <button class="cat-tab" role="tab" aria-selected="false" data-cat="addon">
+        <div class="cat-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
         </div>
-        <span class="text-xs font-semibold text-gray-600">Add On</span>
+        <span class="cat-lbl">Add On</span>
       </button>
     </div>
 
-    <!-- Cards -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-5 fade-up">
-      <!-- Card 1 -->
-      <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md">
+    <!-- Menu grid -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 fade-up" id="menu-grid">
+
+      <article class="menu-card" style="position:relative;">
+        <div class="card-badge">Best Seller</div>
         <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80"
-             alt="Ayam Gunting Cheese" class="w-full h-40 object-cover"/>
-        <div class="p-3">
-          <h3 class="font-bold text-gray-800 text-sm">Ayam Gunting Cheese</h3>
-          <p class="text-xs text-gray-500 mt-0.5 mb-2">Ayam Gunting + Cheese</p>
-          <p class="text-red-600 font-black text-sm mb-3">RM16.50</p>
-          <a href="#order" class="block text-center bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2 rounded-full transition">
-            Order Now
-          </a>
+             alt="Ayam Gunting Cheese" width="400" height="180" loading="lazy"
+             class="w-full object-cover" style="height:160px;" />
+        <div class="p-4">
+          <h3 style="font-weight:700;font-size:13px;color:var(--text);line-height:1.3;margin-bottom:3px;">Ayam Gunting Cheese</h3>
+          <p style="font-size:11px;color:var(--muted);margin-bottom:10px;">Ayam Gunting + Cheese</p>
+          <p style="font-weight:900;font-size:15px;color:var(--red);margin-bottom:12px;">RM 16.50</p>
+          <a href="#order" class="btn btn-red w-full justify-center" style="font-size:12px;padding:9px 14px;">Order Now</a>
         </div>
-      </div>
-      <!-- Card 2 -->
-      <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md">
+      </article>
+
+      <article class="menu-card" style="position:relative;">
         <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80"
-             alt="Ayam Gunting Ramen" class="w-full h-40 object-cover"/>
-        <div class="p-3">
-          <h3 class="font-bold text-gray-800 text-sm">Ayam Gunting Ramen</h3>
-          <p class="text-xs text-gray-500 mt-0.5 mb-2">Ayam Gunting + Cheese + Ramen</p>
-          <p class="text-red-600 font-black text-sm mb-3">RM17.00</p>
-          <a href="#order" class="block text-center bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2 rounded-full transition">
-            Order Now
-          </a>
+             alt="Ayam Gunting Ramen" width="400" height="180" loading="lazy"
+             class="w-full object-cover" style="height:160px;" />
+        <div class="p-4">
+          <h3 style="font-weight:700;font-size:13px;color:var(--text);line-height:1.3;margin-bottom:3px;">Ayam Gunting Ramen</h3>
+          <p style="font-size:11px;color:var(--muted);margin-bottom:10px;">Ayam Gunting + Cheese + Ramen</p>
+          <p style="font-weight:900;font-size:15px;color:var(--red);margin-bottom:12px;">RM 17.00</p>
+          <a href="#order" class="btn btn-red w-full justify-center" style="font-size:12px;padding:9px 14px;">Order Now</a>
         </div>
-      </div>
-      <!-- Card 3 -->
-      <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md">
+      </article>
+
+      <article class="menu-card" style="position:relative;">
         <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=400&q=80"
-             alt="Ayam Gunting Bahagia" class="w-full h-40 object-cover"/>
-        <div class="p-3">
-          <h3 class="font-bold text-gray-800 text-sm">Ayam Gunting Bahagia</h3>
-          <p class="text-xs text-gray-500 mt-0.5 mb-2">Chicken Breast + Soy Garlic</p>
-          <p class="text-red-600 font-black text-sm mb-3">RM15.50</p>
-          <a href="#order" class="block text-center bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2 rounded-full transition">
-            Order Now
-          </a>
+             alt="Ayam Gunting Bahagia" width="400" height="180" loading="lazy"
+             class="w-full object-cover" style="height:160px;" />
+        <div class="p-4">
+          <h3 style="font-weight:700;font-size:13px;color:var(--text);line-height:1.3;margin-bottom:3px;">Ayam Gunting Bahagia</h3>
+          <p style="font-size:11px;color:var(--muted);margin-bottom:10px;">Chicken Breast + Soy Garlic</p>
+          <p style="font-weight:900;font-size:15px;color:var(--red);margin-bottom:12px;">RM 15.50</p>
+          <a href="#order" class="btn btn-red w-full justify-center" style="font-size:12px;padding:9px 14px;">Order Now</a>
         </div>
-      </div>
-      <!-- Card 4 -->
-      <div class="menu-card bg-white rounded-2xl overflow-hidden shadow-md">
+      </article>
+
+      <article class="menu-card" style="position:relative;">
         <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&q=80"
-             alt="Ayam Korea Cheese" class="w-full h-40 object-cover"/>
-        <div class="p-3">
-          <h3 class="font-bold text-gray-800 text-sm">Ayam Korea Cheese</h3>
-          <p class="text-xs text-gray-500 mt-0.5 mb-2">Ayam Gunting + Cheese + Soy Korea</p>
-          <p class="text-red-600 font-black text-sm mb-3">RM16.50</p>
-          <a href="#order" class="block text-center bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2 rounded-full transition">
-            Order Now
-          </a>
+             alt="Ayam Korea Cheese" width="400" height="180" loading="lazy"
+             class="w-full object-cover" style="height:160px;" />
+        <div class="p-4">
+          <h3 style="font-weight:700;font-size:13px;color:var(--text);line-height:1.3;margin-bottom:3px;">Ayam Korea Cheese</h3>
+          <p style="font-size:11px;color:var(--muted);margin-bottom:10px;">Ayam Gunting + Cheese + Soy Korea</p>
+          <p style="font-weight:900;font-size:15px;color:var(--red);margin-bottom:12px;">RM 16.50</p>
+          <a href="#order" class="btn btn-red w-full justify-center" style="font-size:12px;padding:9px 14px;">Order Now</a>
+        </div>
+      </article>
+    </div>
+
+    <!-- See full menu -->
+    <div class="text-center mt-10 fade-up">
+      <a href="#order" class="btn btn-outline-red" style="font-size:14px;padding:12px 36px;">See Full Menu</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+     NIMICOO STORY
+═══════════════════════════════════════ -->
+<section id="story" class="story-bg py-20">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+      <!-- Text side -->
+      <div class="fade-up">
+        <h2 class="font-script s-script" style="color:rgba(255,255,255,.75);font-size:clamp(28px,3.5vw,42px);margin-bottom:16px;">Nimicoo Story</h2>
+        <h3 class="font-display text-white" style="font-size:clamp(22px,3vw,34px);font-weight:700;line-height:1.25;margin-bottom:20px;">
+          Ayam Gunting Gemok<br/>Tanpa Tulang
+        </h3>
+        <p style="color:rgba(255,255,255,.78);font-size:14px;line-height:1.85;margin-bottom:14px;">
+          Welcome to Nimicoo, the home of the ultimate Ayam Gunting.
+          Our journey began in Kamunting, Perak, fueled by an obsession
+          with crafting the perfect fried chicken cutlet. We believe that great
+          street food shouldn't just taste good — it should feel rewarding.
+        </p>
+        <p style="color:rgba(255,255,255,.78);font-size:14px;line-height:1.85;">
+          That's why we take immense pride in our Ayam Gunting Gemok Tanpa Tulang,
+          serving 100% boneless, premium chicken that is carefully marinated,
+          deep-fried to a golden crisp, and packed with our signature flavors.
+          Whether you've been supporting us since day one or you're discovering us for the
+          first time, we are committed to serving you joy and maximum satisfaction in every single bite.
+        </p>
+      </div>
+
+      <!-- Mascot side -->
+      <div class="flex justify-center items-center fade-up">
+        <!-- Nimicoo mascot illustration placeholder -->
+        <div style="width:280px;height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;">
+          <!-- Mascot SVG illustration -->
+          <svg width="260" height="300" viewBox="0 0 260 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Nimicoo mascot" role="img">
+            <!-- Body -->
+            <ellipse cx="130" cy="210" rx="55" ry="70" fill="#fff"/>
+            <!-- Shirt red -->
+            <ellipse cx="130" cy="230" rx="52" ry="55" fill="#C8102E"/>
+            <!-- Head -->
+            <circle cx="130" cy="110" r="68" fill="#FDDBB4"/>
+            <!-- Hair -->
+            <ellipse cx="130" cy="50" rx="68" ry="35" fill="#2D1B0E"/>
+            <!-- Glasses frame -->
+            <rect x="98" y="102" width="26" height="18" rx="9" fill="none" stroke="#2D1B0E" stroke-width="3.5"/>
+            <rect x="136" y="102" width="26" height="18" rx="9" fill="none" stroke="#2D1B0E" stroke-width="3.5"/>
+            <line x1="124" y1="111" x2="136" y2="111" stroke="#2D1B0E" stroke-width="3"/>
+            <line x1="92" y1="111" x2="98" y2="111" stroke="#2D1B0E" stroke-width="3"/>
+            <line x1="162" y1="111" x2="168" y2="111" stroke="#2D1B0E" stroke-width="3"/>
+            <!-- Eyes -->
+            <circle cx="111" cy="111" r="5" fill="#2D1B0E"/>
+            <circle cx="149" cy="111" r="5" fill="#2D1B0E"/>
+            <!-- Smile -->
+            <path d="M115 130 Q130 145 145 130" stroke="#2D1B0E" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <!-- Ears -->
+            <ellipse cx="63" cy="110" rx="10" ry="14" fill="#FDDBB4"/>
+            <ellipse cx="197" cy="110" rx="10" ry="14" fill="#FDDBB4"/>
+            <!-- Arms -->
+            <rect x="60" y="195" width="22" height="55" rx="11" fill="#C8102E" transform="rotate(-15 60 195)"/>
+            <rect x="178" y="195" width="22" height="55" rx="11" fill="#C8102E" transform="rotate(15 200 195)"/>
+            <!-- Hands holding scissors -->
+            <circle cx="44" cy="252" r="14" fill="#FDDBB4"/>
+            <!-- Scissors -->
+            <line x1="24" y1="235" x2="44" y2="255" stroke="#888" stroke-width="3" stroke-linecap="round"/>
+            <line x1="24" y1="255" x2="44" y2="235" stroke="#888" stroke-width="3" stroke-linecap="round"/>
+            <!-- Chicken leg on right hand -->
+            <circle cx="216" cy="252" r="14" fill="#FDDBB4"/>
+            <ellipse cx="220" cy="245" rx="10" ry="14" fill="#E8A020" transform="rotate(20 220 245)"/>
+            <!-- Logo text below -->
+            <text x="130" y="295" text-anchor="middle" fill="white" font-family="Karla, sans-serif" font-weight="800" font-size="13" letter-spacing="3">NIMICOO</text>
+            <text x="130" y="308" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-family="Karla, sans-serif" font-weight="400" font-size="9" letter-spacing="1">AYAM ✂ GEMOK TANPA TULANG</text>
+          </svg>
         </div>
       </div>
     </div>
-
-    <!-- See Full Menu -->
-    <div class="text-center mt-10 fade-up">
-      <a href="#order"
-         class="inline-block border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white font-bold px-10 py-3 rounded-full transition-all duration-200">
-        See Full Menu
-      </a>
-    </div>
   </div>
 </section>
 
-<!-- ============ STORY ============ -->
-<section id="story" class="story-bg py-24 relative overflow-hidden">
-  <!-- Decorative circle -->
-  <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
-    <div class="w-[600px] h-[600px] rounded-full border-[60px] border-white"></div>
-  </div>
-  <div class="max-w-3xl mx-auto px-6 text-center relative z-10 fade-up">
-    <p class="text-red-200 font-semibold tracking-widest uppercase text-sm mb-3">Nimicoo Story</p>
-    <h2 class="font-display text-white text-3xl md:text-5xl font-bold italic mb-6 leading-tight">
-      Ayam Gunting Gemok Tanpa Tulang
-    </h2>
-    <p class="text-white/80 text-base leading-relaxed mb-4">
-      Welcome to Nimicoo, the home of the ultimate Ayam Gunting. Our journey began in Kamunting, Perak,
-      fueled by an obsession with crafting the perfect fried chicken cutlet. We believe that great
-      street food shouldn't just taste good — it should feel rewarding.
-    </p>
-    <p class="text-white/80 text-base leading-relaxed">
-      That's why we take immense pride in our Ayam Gunting Gemok Tanpa Tulang, serving 100%
-      boneless, premium chicken that is carefully marinated, deep-fried to a golden crisp, and packed with
-      our signature flavours. Whether you've been supporting us since day one or you're discovering us for
-      the first time, we are committed to serving you joy and maximum satisfaction in every single bite.
-    </p>
-  </div>
-</section>
-
-<!-- ============ SOCIAL MEDIA ============ -->
-<section class="py-20 bg-white">
+<!-- ═══════════════════════════════════════
+     OUR SOCIAL MEDIA
+═══════════════════════════════════════ -->
+<section class="py-16" style="background:var(--cream);">
   <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-10 fade-up">
-      <h2 class="font-display text-red-600 text-4xl font-bold">Our Social Media</h2>
-      <div class="w-12 h-1 bg-red-500 mx-auto mt-3 rounded-full"></div>
+      <h2 class="font-script s-script" style="color:var(--red);">Our Social Media</h2>
     </div>
     <div class="grid grid-cols-3 gap-3 fade-up">
-      <!-- Post 1 -->
-      <div class="relative rounded-2xl overflow-hidden aspect-square group cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&q=80"
-             class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Post 1"/>
-        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
-        <div class="absolute bottom-2 left-3 text-white text-xs font-bold flex items-center gap-1">
-          <span>▶</span> 8,507
+      <a href="https://www.instagram.com/nimicoo.official" target="_blank" rel="noopener noreferrer" class="s-post" aria-label="Post Instagram — 8,507 views">
+        <img src="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=400&q=80" alt="Post Nimicoo" width="400" height="400" loading="lazy" />
+        <div class="s-overlay"></div>
+        <div class="s-meta">
+          <svg width="11" height="11" fill="#fff" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>8,507
         </div>
-      </div>
-      <!-- Post 2 -->
-      <div class="relative rounded-2xl overflow-hidden aspect-square group cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=400&q=80"
-             class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Post 2"/>
-        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
-        <div class="absolute bottom-2 left-3 text-white text-xs font-bold flex items-center gap-1">
-          <span>▶</span> 1.4k
+      </a>
+      <a href="https://www.instagram.com/nimicoo.official" target="_blank" rel="noopener noreferrer" class="s-post" aria-label="Post Instagram — 1.4k views">
+        <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=400&q=80" alt="Post Nimicoo" width="400" height="400" loading="lazy" />
+        <div class="s-overlay"></div>
+        <div class="s-meta">
+          <svg width="11" height="11" fill="#fff" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>1.4k
         </div>
-      </div>
-      <!-- Post 3 -->
-      <div class="relative rounded-2xl overflow-hidden aspect-square group cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&q=80"
-             class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Post 3"/>
-        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
-        <div class="absolute bottom-2 left-3 text-white text-xs font-bold flex items-center gap-1">
-          <span>▶</span> 1,216
+      </a>
+      <a href="https://www.instagram.com/nimicoo.official" target="_blank" rel="noopener noreferrer" class="s-post" aria-label="Post Instagram — 1,216 views">
+        <img src="https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&q=80" alt="Post Nimicoo" width="400" height="400" loading="lazy" />
+        <div class="s-overlay"></div>
+        <div class="s-meta">
+          <svg width="11" height="11" fill="#fff" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>1,216
         </div>
-      </div>
-      <!-- Post 4 -->
-      <div class="relative rounded-2xl overflow-hidden aspect-square group cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80"
-             class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Post 4"/>
-        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
-        <div class="absolute bottom-2 left-3 text-white text-xs font-bold flex items-center gap-1">
-          <span>▶</span> 8,507
+      </a>
+      <a href="https://www.instagram.com/nimicoo.official" target="_blank" rel="noopener noreferrer" class="s-post" aria-label="Post Instagram — 8,507 views">
+        <img src="https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=400&q=80" alt="Post Nimicoo" width="400" height="400" loading="lazy" />
+        <div class="s-overlay"></div>
+        <div class="s-meta">
+          <svg width="11" height="11" fill="#fff" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>8,507
         </div>
-      </div>
-      <!-- Post 5 -->
-      <div class="relative rounded-2xl overflow-hidden aspect-square group cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80"
-             class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Post 5"/>
-        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
-        <div class="absolute bottom-2 left-3 text-white text-xs font-bold flex items-center gap-1">
-          <span>▶</span> 1.4k
+      </a>
+      <a href="https://www.instagram.com/nimicoo.official" target="_blank" rel="noopener noreferrer" class="s-post" aria-label="Post Instagram — 1.4k views">
+        <img src="https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=400&q=80" alt="Post Nimicoo" width="400" height="400" loading="lazy" />
+        <div class="s-overlay"></div>
+        <div class="s-meta">
+          <svg width="11" height="11" fill="#fff" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>1.4k
         </div>
-      </div>
-      <!-- Post 6 -->
-      <div class="relative rounded-2xl overflow-hidden aspect-square group cursor-pointer">
-        <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=400&q=80"
-             class="w-full h-full object-cover group-hover:scale-105 transition duration-500" alt="Post 6"/>
-        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition duration-300"></div>
-        <div class="absolute bottom-2 left-3 text-white text-xs font-bold flex items-center gap-1">
-          <span>▶</span> 1,216
+      </a>
+      <a href="https://www.instagram.com/nimicoo.official" target="_blank" rel="noopener noreferrer" class="s-post" aria-label="Post Instagram — 1,216 views">
+        <img src="https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=400&q=80" alt="Post Nimicoo" width="400" height="400" loading="lazy" />
+        <div class="s-overlay"></div>
+        <div class="s-meta">
+          <svg width="11" height="11" fill="#fff" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>1,216
         </div>
-      </div>
-    </div>
-    <div class="text-center mt-8 fade-up">
-      <a href="https://www.instagram.com" target="_blank"
-         class="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white font-bold px-8 py-3 rounded-full hover:opacity-90 transition">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        Follow Us on Instagram
       </a>
     </div>
   </div>
 </section>
 
-<!-- ============ TESTIMONIALS ============ -->
-<section class="py-20 bg-[#fdf6ee]">
+<!-- ═══════════════════════════════════════
+     WHAT OUR CUSTOMERS SAY
+═══════════════════════════════════════ -->
+<section class="py-16 bg-white">
   <div class="max-w-6xl mx-auto px-6">
     <div class="text-center mb-10 fade-up">
-      <h2 class="font-display text-red-600 text-4xl font-bold">What Our Customers Say</h2>
-      <div class="w-12 h-1 bg-red-500 mx-auto mt-3 rounded-full"></div>
+      <h2 class="font-script s-script" style="color:var(--red);">What Our Customers Say</h2>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-5 fade-up">
-      <!-- Review 1 -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center font-bold text-red-600 text-sm">A</div>
-          <div><p class="font-semibold text-sm text-gray-800">ADDA0101</p><p class="text-xs text-gray-400">Verified Buyer</p></div>
+
+      <article class="review-card">
+        <div class="flex items-center gap-3" style="margin-bottom:12px;">
+          <div class="avatar" aria-hidden="true">A</div>
+          <div>
+            <p style="font-weight:700;font-size:14px;color:var(--text);">ADDA0101</p>
+            <p style="font-size:12px;color:var(--muted);">Verified Buyer</p>
+          </div>
         </div>
-        <div class="flex gap-0.5 mb-2">⭐⭐⭐⭐⭐</div>
-        <p class="text-sm text-gray-600 leading-relaxed">"Mmg sedap. Dah byk kali repeat beli ayam nimicoo. Kegemaran kami sekeluarga 😊😍"</p>
-      </div>
-      <!-- Review 2 -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center font-bold text-red-600 text-sm">N</div>
-          <div><p class="font-semibold text-sm text-gray-800">Nurul Azila Mohd Noor</p><p class="text-xs text-gray-400">Verified Buyer</p></div>
+        <p style="font-size:13px;color:var(--text);line-height:1.7;margin-bottom:10px;">"Mmg sedap. Dah byk kali repeat beli ayam nimicoo. Kegemaran kami sekeluarga!"</p>
+        <div class="flex gap-0.5" aria-label="5 stars out of 5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
-        <div class="flex gap-0.5 mb-2">⭐⭐⭐⭐⭐</div>
-        <p class="text-sm text-gray-600 leading-relaxed">"Dengan bahu sahaja dah tahu makanan diorg sedap. And ternyata mmg sedap! Recommended 😍♥"</p>
-      </div>
-      <!-- Review 3 -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center font-bold text-red-600 text-sm">T</div>
-          <div><p class="font-semibold text-sm text-gray-800">Titiyarni Mansur</p><p class="text-xs text-gray-400">Verified Buyer</p></div>
+      </article>
+
+      <article class="review-card">
+        <div class="flex items-center gap-3" style="margin-bottom:12px;">
+          <div class="avatar" aria-hidden="true">N</div>
+          <div>
+            <p style="font-weight:700;font-size:14px;color:var(--text);">Nurul Azila Mohd Noor</p>
+            <p style="font-size:12px;color:var(--muted);">Verified Buyer</p>
+          </div>
         </div>
-        <div class="flex gap-0.5 mb-2">⭐⭐⭐⭐⭐</div>
-        <p class="text-sm text-gray-600 leading-relaxed">"Ayam gunting paling sedap. takda tulang. prtion banyak. chees banyak. semoga terus maju jaya."</p>
-      </div>
-      <!-- Review 4 -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center font-bold text-red-600 text-sm">A</div>
-          <div><p class="font-semibold text-sm text-gray-800">ADDA0101</p><p class="text-xs text-gray-400">Verified Buyer</p></div>
+        <p style="font-size:13px;color:var(--text);line-height:1.7;margin-bottom:10px;">"Dengan bau sahaja dah tahu makanan diorg sedap. And ternyata mmg sedap! Recommended 😍"</p>
+        <div class="flex gap-0.5" aria-label="5 stars out of 5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
-        <div class="flex gap-0.5 mb-2">⭐⭐⭐⭐⭐</div>
-        <p class="text-sm text-gray-600 leading-relaxed">"Mmg sedap. Dah byk kali repeat beli ayam nimicoo. Kegemaran kami sekeluarga 😊😍"</p>
-      </div>
-      <!-- Review 5 -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center font-bold text-red-600 text-sm">N</div>
-          <div><p class="font-semibold text-sm text-gray-800">Nurul Azila Mohd Noor</p><p class="text-xs text-gray-400">Verified Buyer</p></div>
+      </article>
+
+      <article class="review-card">
+        <div class="flex items-center gap-3" style="margin-bottom:12px;">
+          <div class="avatar" aria-hidden="true">T</div>
+          <div>
+            <p style="font-weight:700;font-size:14px;color:var(--text);">Titiyarni Mansur</p>
+            <p style="font-size:12px;color:var(--muted);">Verified Buyer</p>
+          </div>
         </div>
-        <div class="flex gap-0.5 mb-2">⭐⭐⭐⭐⭐</div>
-        <p class="text-sm text-gray-600 leading-relaxed">"Dengan bahu sahaja dah tahu makanan diorg sedap. And ternyata mmg sedap! Recommended 😍♥"</p>
-      </div>
-      <!-- Review 6 -->
-      <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center font-bold text-red-600 text-sm">T</div>
-          <div><p class="font-semibold text-sm text-gray-800">Titiyarni Mansur</p><p class="text-xs text-gray-400">Verified Buyer</p></div>
+        <p style="font-size:13px;color:var(--text);line-height:1.7;margin-bottom:10px;">"Ayam gunting paling sedap. Takda tulang. Portion banyak. Cheese banyak. Semoga terus maju jaya!"</p>
+        <div class="flex gap-0.5" aria-label="5 stars out of 5">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--gold)" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         </div>
-        <div class="flex gap-0.5 mb-2">⭐⭐⭐⭐⭐</div>
-        <p class="text-sm text-gray-600 leading-relaxed">"Ayam gunting paling sedap. takda tulang. prtion banyak. chees banyak. semoga terus maju jaya."</p>
-      </div>
+      </article>
+
     </div>
   </div>
 </section>
 
-<!-- ============ FAQ ============ -->
-<section class="py-20 bg-white">
+<!-- ═══════════════════════════════════════
+     FAQs
+═══════════════════════════════════════ -->
+<section class="py-16" style="background:var(--cream);">
   <div class="max-w-2xl mx-auto px-6">
     <div class="text-center mb-10 fade-up">
-      <h2 class="font-display text-gray-800 text-4xl font-bold tracking-wider">F A Q s</h2>
-      <div class="w-12 h-1 bg-red-500 mx-auto mt-3 rounded-full"></div>
+      <h2 class="font-script s-script" style="color:var(--red);">FAQs</h2>
     </div>
     <div class="space-y-3 fade-up">
-      <details class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200">
-        <summary class="flex items-center justify-between px-6 py-4 font-semibold text-gray-800">
+      <details class="faq">
+        <summary>
           Do you do dine in?
-          <span class="chevron text-red-600 text-xl">⌄</span>
+          <svg class="faq-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </summary>
-        <p class="px-6 pb-5 text-gray-500 text-sm leading-relaxed">
-          Yes! You are welcome to dine in at our outlet. We have comfortable seating available. Please visit us during operating hours.
-        </p>
+        <p class="faq-body">Yes! You are welcome to dine in at our outlet. We have comfortable seating available. Please visit us during our operating hours.</p>
       </details>
-      <details class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200">
-        <summary class="flex items-center justify-between px-6 py-4 font-semibold text-gray-800">
+      <details class="faq">
+        <summary>
           Do you offer delivery?
-          <span class="chevron text-red-600 text-xl">⌄</span>
+          <svg class="faq-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </summary>
-        <p class="px-6 pb-5 text-gray-500 text-sm leading-relaxed">
-          Absolutely! We offer delivery via GrabFood and FoodPanda. You can also order directly through our WhatsApp for self-pickup orders.
-        </p>
+        <p class="faq-body">Yes! We offer delivery via GrabFood and FoodPanda. You can also order directly via WhatsApp for self-pickup.</p>
       </details>
-      <details class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200">
-        <summary class="flex items-center justify-between px-6 py-4 font-semibold text-gray-800">
-          Is the chicken halal certified?
-          <span class="chevron text-red-600 text-xl">⌄</span>
+      <details class="faq">
+        <summary>
+          Is your chicken halal certified?
+          <svg class="faq-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </summary>
-        <p class="px-6 pb-5 text-gray-500 text-sm leading-relaxed">
-          Yes, all our chicken is 100% halal. We take halal compliance seriously and source only from certified suppliers.
-        </p>
+        <p class="faq-body">Yes, all our chicken is 100% halal. We only source from certified suppliers that fully comply with halal standards.</p>
       </details>
-      <details class="bg-gray-50 rounded-2xl overflow-hidden border border-gray-200">
-        <summary class="flex items-center justify-between px-6 py-4 font-semibold text-gray-800">
-          Can I place bulk orders for events?
-          <span class="chevron text-red-600 text-xl">⌄</span>
+      <details class="faq">
+        <summary>
+          Can I place a bulk order for events?
+          <svg class="faq-chevron" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
         </summary>
-        <p class="px-6 pb-5 text-gray-500 text-sm leading-relaxed">
-          Yes! We cater for events including rumah terbuka, kenduri, and corporate events. Please contact us at least 3 days in advance for large orders.
-        </p>
+        <p class="faq-body">Absolutely! We cater for open houses, kenduri, and corporate events. Please contact us at least 3 days in advance for bulk orders.</p>
       </details>
     </div>
   </div>
 </section>
 
-<!-- ============ ORDER CTA ============ -->
-<section id="order" class="bg-red-600 py-16 text-center">
-  <div class="max-w-xl mx-auto px-6 fade-up">
-    <h2 class="font-display text-white text-4xl font-bold mb-3">Ready to Order? 🍗</h2>
-    <p class="text-white/80 mb-8">Order via WhatsApp for pickup or check us out on food delivery apps.</p>
-    <div class="flex flex-wrap justify-center gap-4">
-      <a href="https://wa.me/60123456789" target="_blank"
-         class="inline-flex items-center gap-2 bg-white text-red-600 font-bold px-8 py-3.5 rounded-full shadow-lg hover:shadow-xl hover:bg-red-50 transition">
-        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        WhatsApp Order
-      </a>
-      <a href="#" class="inline-flex items-center gap-2 bg-red-700 text-white font-bold px-8 py-3.5 rounded-full shadow-lg hover:bg-red-800 transition border border-red-500">
-        🛵 GrabFood
-      </a>
-    </div>
-  </div>
-</section>
+<!-- ═══════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════ -->
+<footer id="location" role="contentinfo" style="background:var(--red-dark);">
 
-<!-- ============ FOOTER ============ -->
-<footer id="location" class="py-14 text-gray-300">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-      <!-- Brand -->
+  <div class="max-w-6xl mx-auto px-6 py-14">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+
+      <!-- Brand + social col -->
       <div>
-        <div class="flex items-center gap-2 mb-4">
-          <div class="w-10 h-10 rounded-full bg-red-700 flex items-center justify-center">
-            <span class="text-white font-black text-sm">NAG</span>
+        <!-- Logo -->
+        <div class="flex items-center gap-3" style="margin-bottom:14px;">
+          <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="24" height="24" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+              <circle cx="20" cy="20" r="20" fill="rgba(255,255,255,0.2)"/>
+              <circle cx="20" cy="14" r="6" fill="#fff"/>
+              <rect x="12" y="22" width="16" height="10" rx="5" fill="#fff"/>
+            </svg>
           </div>
           <div>
-            <div class="font-black text-white text-base">NIMICOO</div>
-            <div class="text-xs text-gray-400">Ayam Gunting Tanpa Tulang</div>
+            <div style="font-weight:900;color:#fff;font-size:15px;letter-spacing:.12em;">NIMICOO</div>
+            <div style="font-size:9px;color:rgba(255,255,255,.5);letter-spacing:.05em;">AYAM ✂ GEMOK TANPA TULANG</div>
           </div>
         </div>
-        <div class="flex gap-3 mt-2">
-          <a href="#" class="w-9 h-9 rounded-full bg-gray-700 hover:bg-red-600 flex items-center justify-center transition text-sm">📘</a>
-          <a href="#" class="w-9 h-9 rounded-full bg-gray-700 hover:bg-pink-600 flex items-center justify-center transition text-sm">📷</a>
-          <a href="#" class="w-9 h-9 rounded-full bg-gray-700 hover:bg-green-600 flex items-center justify-center transition text-sm">💬</a>
+        <p class="f-head" style="margin-top:18px;">Social Media</p>
+        <div class="flex gap-3">
+          <a href="https://www.instagram.com/nimicoo.official" target="_blank" rel="noopener noreferrer" class="soc-icon" aria-label="Instagram @nimicoo.official">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="soc-icon" aria-label="TikTok Nimicoo">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.07a8.16 8.16 0 004.77 1.52V7.15a4.85 4.85 0 01-1-.46z"/></svg>
+          </a>
+          <a href="https://wa.me/60123456789" target="_blank" rel="noopener noreferrer" class="soc-icon" aria-label="WhatsApp Nimicoo">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+        </div>
+        <!-- Contact -->
+        <div style="margin-top:16px;">
+          <a href="tel:+601xxxxxxxxx" class="f-link" style="display:flex;align-items:center;gap:7px;margin-bottom:6px;">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            +601x-xxx xxxx
+          </a>
         </div>
       </div>
+
       <!-- Operating Hours -->
       <div>
-        <h4 class="font-bold text-white mb-3 text-sm uppercase tracking-wide">Operating Hours</h4>
-        <ul class="text-xs space-y-1 text-gray-400">
-          <li>Mon: 10.00 pm – 7.00 pm</li>
-          <li>Tue: 10.00 pm – 7.00 pm</li>
-          <li>Wed: <span class="text-red-400">Closed</span></li>
-          <li>Thu: 10.00 pm – 7.00 pm</li>
-          <li>Fri: 10.00 pm – 7.00 pm</li>
-          <li>Sat: 12.00 pm – 7.00 pm</li>
-          <li>Sun: 12.00 pm – 7.00 pm</li>
+        <p class="f-head">Operating Hours</p>
+        <ul style="font-size:12px;line-height:1.9;">
+          <li class="flex justify-between" style="color:rgba(255,255,255,.6);">
+            <span>Mon</span><span>10:00 am – 7:00 pm</span>
+          </li>
+          <li class="flex justify-between" style="color:rgba(255,255,255,.6);">
+            <span>Tue</span><span>12:00 pm – 2:00 pm</span>
+          </li>
+          <li class="flex justify-between" style="color:rgba(255,255,255,.6);">
+            <span>Wed</span><span>12:00 pm – 2:00 pm</span>
+          </li>
+          <li class="flex justify-between" style="color:rgba(255,255,255,.6);">
+            <span>Thu</span><span>12:00 pm – 7:00 pm</span>
+          </li>
+          <li class="flex justify-between" style="color:rgba(255,255,255,.6);">
+            <span>Fri</span><span>12:00 pm – 7:00 pm</span>
+          </li>
+          <li class="flex justify-between" style="color:rgba(255,255,255,.6);">
+            <span>Sat</span><span>12:00 pm – 7:00 pm</span>
+          </li>
+          <li class="flex justify-between" style="color:rgba(255,255,255,.6);">
+            <span>Sun</span><span>12:00 pm – 7:00 pm</span>
+          </li>
         </ul>
       </div>
+
       <!-- Location -->
       <div>
-        <h4 class="font-bold text-white mb-3 text-sm uppercase tracking-wide">Location</h4>
-        <p class="text-xs text-gray-400 leading-relaxed">
+        <p class="f-head">Location 9</p>
+        <address style="font-style:normal;font-size:13px;color:rgba(255,255,255,.6);line-height:2;">
           Lot 1621, Kamunting,<br/>
           Batu Hamillah, 34600<br/>
           Kamunting, Perak
-        </p>
-        <a href="https://maps.google.com" target="_blank"
-           class="inline-block mt-3 text-xs text-red-400 hover:text-red-300 underline">
-          View on Google Maps →
+        </address>
+        <a href="https://maps.google.com/?q=Kamunting+Perak" target="_blank" rel="noopener noreferrer"
+           class="f-link" style="display:inline-flex;align-items:center;gap:5px;margin-top:10px;color:rgba(255,255,255,.85);">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          View on Google Maps
         </a>
       </div>
-      <!-- Contact -->
+
+      <!-- Map -->
       <div>
-        <h4 class="font-bold text-white mb-3 text-sm uppercase tracking-wide">Contact</h4>
-        <p class="text-xs text-gray-400">📞 +601x-xxx xxxx</p>
-        <p class="text-xs text-gray-400 mt-1">📧 nimicoo@email.com</p>
-        <p class="text-xs text-gray-400 mt-1">📸 @nimicoo.official</p>
+        <div class="map-box" style="height:170px;">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3973.023406428869!2d100.74469607509!3d4.978459494973!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31caa2c5cf1d22d9%3A0x14c4bc20af1bdee!2sKamunting%2C%2034600%20Taiping%2C%20Perak!5e0!3m2!1sen!2smy!4v1700000000000!5m2!1sen!2smy"
+            width="100%" height="170" style="border:0;display:block;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade" title="Nimicoo location map"
+            aria-label="Google Maps showing Nimicoo location in Kamunting, Perak">
+          </iframe>
+        </div>
       </div>
+
     </div>
-    <div class="border-t border-gray-700 mt-10 pt-6 text-center text-xs text-gray-500">
-      Copyright © Nimicoo Ayam Gunting. All rights reserved.
+
+    <!-- Bottom bar -->
+    <div style="border-top:1px solid rgba(255,255,255,.1);margin-top:40px;padding-top:20px;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;font-size:12px;color:rgba(255,255,255,.4);">
+      <p>Copyright @Nimicoo Trading &nbsp;|&nbsp; 2025</p>
     </div>
   </div>
 </footer>
 
-<!-- ============ SCRIPTS ============ -->
+<!-- ORDER anchor (linked from nav) -->
+<div id="order"></div>
+
+<!-- WhatsApp float -->
+<a href="https://wa.me/60123456789" target="_blank" rel="noopener noreferrer"
+   class="wa-float" aria-label="Order via WhatsApp">
+  <svg width="26" height="26" fill="white" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
 <script>
-  // Mobile menu toggle
-  document.getElementById('menu-btn').addEventListener('click', () => {
-    document.getElementById('mobile-menu').classList.toggle('hidden');
+  // Hamburger toggle
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuBtn.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  document.querySelectorAll('.mob-lnk').forEach(l => {
+    l.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.setAttribute('aria-label', 'Open menu');
+    });
   });
 
-  // Scroll fade-in
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  // Category tabs
+  document.querySelectorAll('.cat-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.cat-tab').forEach(t => t.setAttribute('aria-selected', 'false'));
+      tab.setAttribute('aria-selected', 'true');
+    });
+  });
 
-  // Smooth scroll
+  // Hero Ken Burns
+  window.addEventListener('load', () => {
+    const bg = document.getElementById('hero-bg');
+    if (bg) bg.classList.add('loaded');
+  });
+
+  // Scroll reveal — respects prefers-reduced-motion
+  const motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (motionOK) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+  } else {
+    document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+  }
+
+  // Smooth scroll with nav offset
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const id = a.getAttribute('href');
-      const el = document.querySelector(id);
-      if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+      if (!id || id === '#') return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: motionOK ? 'smooth' : 'auto' });
     });
   });
 </script>
